@@ -5,8 +5,6 @@ namespace SocketTestLib
 {
     public class SocketClient
     {
-        public string Host { get; set; } = "localhost";
-        public int Port { get; set; } = 8000;
         private readonly Action<string> _onData;
         private Thread _receiveSocketDataThread;
         private TcpClient _tcpClient = new();
@@ -18,7 +16,7 @@ namespace SocketTestLib
             _onData = onData;
         }
 
-        public bool Connect()
+        public bool Connect(string host, int port)
         {
             try
             {
@@ -27,7 +25,7 @@ namespace SocketTestLib
                     Disconnect();
                 }
                 _tcpClient = new TcpClient();
-                _tcpClient.Connect(Host, Port);
+                _tcpClient.Connect(host, port);
                 _stop = false;
                 _receiveSocketDataThread = new(Receive);
                 _receiveSocketDataThread.Start();

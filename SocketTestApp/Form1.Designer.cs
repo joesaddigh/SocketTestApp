@@ -32,6 +32,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.TabConnectedTo = new System.Windows.Forms.GroupBox();
+            this.BtnLoad = new System.Windows.Forms.Button();
             this.BtnSaveSend = new System.Windows.Forms.Button();
             this.BtnClear = new System.Windows.Forms.Button();
             this.BtnSend = new System.Windows.Forms.Button();
@@ -46,7 +47,6 @@
             this.TbPort = new System.Windows.Forms.TextBox();
             this.IPAddress = new System.Windows.Forms.Label();
             this.port = new System.Windows.Forms.Label();
-            this.BtnLoad = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.TabConnectedTo.SuspendLayout();
@@ -94,6 +94,17 @@
             this.TabConnectedTo.TabIndex = 1;
             this.TabConnectedTo.TabStop = false;
             this.TabConnectedTo.Text = "Connected To";
+            // 
+            // BtnLoad
+            // 
+            this.BtnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnLoad.Location = new System.Drawing.Point(584, 118);
+            this.BtnLoad.Name = "BtnLoad";
+            this.BtnLoad.Size = new System.Drawing.Size(94, 29);
+            this.BtnLoad.TabIndex = 9;
+            this.BtnLoad.Text = "Load";
+            this.BtnLoad.UseVisualStyleBackColor = true;
+            this.BtnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
             // 
             // BtnSaveSend
             // 
@@ -229,6 +240,7 @@
             this.TbPort.TabIndex = 2;
             this.TbPort.Text = "8000";
             this.TbPort.TextChanged += new System.EventHandler(this.TbPort_TextChanged);
+            this.TbPort.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbPort_KeyPress);
             // 
             // IPAddress
             // 
@@ -247,17 +259,6 @@
             this.port.Size = new System.Drawing.Size(38, 20);
             this.port.TabIndex = 0;
             this.port.Text = "Port:";
-            // 
-            // BtnLoad
-            // 
-            this.BtnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.BtnLoad.Location = new System.Drawing.Point(584, 118);
-            this.BtnLoad.Name = "BtnLoad";
-            this.BtnLoad.Size = new System.Drawing.Size(94, 29);
-            this.BtnLoad.TabIndex = 9;
-            this.BtnLoad.Text = "Load";
-            this.BtnLoad.UseVisualStyleBackColor = true;
-            this.BtnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
             // 
             // Form1
             // 

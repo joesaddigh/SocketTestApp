@@ -51,7 +51,7 @@ namespace SocketTestApp
         private void Connect_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            Connected = _socketClient.Connect();
+            Connected = _socketClient.Connect(TbIPAddress.Text, int.Parse(TbPort.Text));
             if (!Connected)
             {
                 MessageBox.Show("Failed to connect", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -77,7 +77,7 @@ namespace SocketTestApp
         {
             SetConnectButtonEnabled();
         }
-        
+
         private void TbPort_TextChanged(object sender, EventArgs e)
         {
             SetConnectButtonEnabled();
@@ -160,7 +160,7 @@ namespace SocketTestApp
                 !string.IsNullOrEmpty(TbSend.Text);
         }
 
-        private void SetClearButtonEnabled() 
+        private void SetClearButtonEnabled()
         {
             BtnClear.Enabled =
                 Connected &&
@@ -175,6 +175,20 @@ namespace SocketTestApp
         private void TbReceive_TextChanged(object sender, EventArgs e)
         {
             SetClearButtonEnabled();
+        }
+
+        private void TbPort_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
