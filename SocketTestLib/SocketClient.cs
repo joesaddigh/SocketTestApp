@@ -6,14 +6,19 @@ namespace SocketTestLib
     public class SocketClient
     {
         private readonly Action<string> _onData;
+        private readonly Action _onDisconnect;
         private Thread _receiveSocketDataThread;
         private TcpClient _tcpClient = new();
         private bool _stop = false;
         private object dataSync = new object();
 
-        public SocketClient(Action<string> onData)
+        public SocketClient(
+            Action<string> onData,
+            Action onDisconnect
+        )
         {
             _onData = onData;
+            _onDisconnect = onDisconnect;
         }
 
         public bool Connect(string host, int port)
@@ -72,6 +77,8 @@ namespace SocketTestLib
                 }
                 catch (SocketException)
                 {
+                    _onDisconnect?.Invoke();
+                    break;
                 }
 
                 lock (dataSync)

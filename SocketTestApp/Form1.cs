@@ -18,7 +18,7 @@ namespace SocketTestApp
 
         public Form1()
         {
-            _socketClient = new SocketClient(OnSocketData);
+            _socketClient = new SocketClient(OnSocketData, OnSocketDisconnect);
 
             try
             {
@@ -40,12 +40,25 @@ namespace SocketTestApp
                     });
                     return;
                 }
-                else
-                {
-                    TbReceive.Text += data;
-                    TbReceive.Text += Environment.NewLine + SOCKET_DATA_SEPARATOR + Environment.NewLine;
-                }
+                
+                TbReceive.AppendText(data);
+                TbReceive.AppendText(Environment.NewLine + SOCKET_DATA_SEPARATOR + Environment.NewLine);
             }
+        }
+
+        private void OnSocketDisconnect()
+        {
+            if (InvokeRequired)
+            {
+                Invoke((MethodInvoker)delegate
+                {
+                    OnSocketDisconnect();
+                });
+                return;
+            }
+            Connected = false;
+
+            SetAllUIEnabledStates();
         }
 
         private void Connect_Click(object sender, EventArgs e)
@@ -91,12 +104,19 @@ namespace SocketTestApp
             }
         }
 
-        private void BtnClear_Click(object sender, EventArgs e)
+        private void BtnClearSendText_Click(object sender, EventArgs e)
         {
-            TbReceive.Clear();
+            TbSend.Clear();
+            SetClearSendTextButtonEnabled();
         }
 
-        private void BtnSaveSend_Click(object sender, EventArgs e)
+        private void BtnClearReceiveText_Click(object sender, EventArgs e)
+        {
+            TbReceive.Clear();
+            SetClearReceivedTextButtonEnabled();
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
         {
             var saveFileDialog = new SaveFileDialog
             {
@@ -127,7 +147,10 @@ namespace SocketTestApp
             SetConnectButtonEnabled();
             SetDisconnectButtonEnabled();
             SetSendButtonEnabled();
-            SetClearButtonEnabled();
+            SetClearSendTextButtonEnabled();
+            SetClearReceivedTextButtonEnabled();
+            SetSaveButtonEnabled();
+            SetLoadButtonEnabled();
         }
 
         private void SetIpAddressEnabled()
@@ -160,21 +183,36 @@ namespace SocketTestApp
                 !string.IsNullOrEmpty(TbSend.Text);
         }
 
-        private void SetClearButtonEnabled()
+        private void SetClearSendTextButtonEnabled()
         {
-            BtnClear.Enabled =
-                Connected &&
-                !string.IsNullOrEmpty(TbReceive.Text);
+            BtnClearSendText.Enabled = !string.IsNullOrEmpty(TbSend.Text);
+        }
+
+        private void SetClearReceivedTextButtonEnabled()
+        {
+            BtnClearReceive.Enabled = !string.IsNullOrEmpty(TbReceive.Text);
+        }
+
+        private void SetSaveButtonEnabled()
+        {
+            BtnSave.Enabled = !string.IsNullOrEmpty(TbSend.Text);
+        }
+
+        private void SetLoadButtonEnabled()
+        {
+            BtnLoad.Enabled = true;
         }
 
         private void TbSend_TextChanged(object sender, EventArgs e)
         {
             SetSendButtonEnabled();
+            SetSaveButtonEnabled();
+            SetClearSendTextButtonEnabled();
         }
 
         private void TbReceive_TextChanged(object sender, EventArgs e)
         {
-            SetClearButtonEnabled();
+            SetClearReceivedTextButtonEnabled();
         }
 
         private void TbPort_KeyPress(object sender, KeyPressEventArgs e)

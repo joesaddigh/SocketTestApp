@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketTestApp", "SocketTestApp\SocketTestApp.csproj", "{7756C814-86ED-4A07-AB63-5167784ED911}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketTestApp", "SocketTestApp\SocketTestApp.csproj", "{7756C814-86ED-4A07-AB63-5167784ED911}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketTestLib", "SocketTestLib\SocketTestLib.csproj", "{E6BF62C6-121E-4A30-8BE5-A72D6F87822B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketTestLib", "SocketTestLib\SocketTestLib.csproj", "{E6BF62C6-121E-4A30-8BE5-A72D6F87822B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{829445C6-E24A-45B8-8DC6-DEAC3E04EE31}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
