@@ -7,10 +7,11 @@ namespace SocketTestLib
     {
         public string Host { get; set; } = "localhost";
         public int Port { get; set; } = 8000;
-
         private readonly Action<string> _onData;
-
-        private TcpClient _tcpClient = new TcpClient();
+        private Thread _receiveSocketDataThread;
+        private TcpClient _tcpClient = new();
+        private bool _stop = false;
+        private object dataSync = new object();
 
         public SocketClient(Action<string> onData)
         {
@@ -21,12 +22,19 @@ namespace SocketTestLib
         {
             try
             {
+                if (_tcpClient.Connected)
+                {
+                    Disconnect();
+                }
                 _tcpClient = new TcpClient();
                 _tcpClient.Connect(Host, Port);
+                _stop = false;
+                _receiveSocketDataThread = new(Receive);
+                _receiveSocketDataThread.Start();
                 return true;
             }
-            catch 
-            { 
+            catch
+            {
             }
 
             return false;
@@ -34,7 +42,11 @@ namespace SocketTestLib
 
         public void Disconnect()
         {
-            _tcpClient.Close();
+            lock (dataSync)
+            {
+                _stop = true;
+            }
+            _tcpClient?.Close();
         }
 
         async public void Send(string data)
@@ -43,12 +55,31 @@ namespace SocketTestLib
             await _tcpClient.Client.SendAsync(dataBytes, SocketFlags.None);
         }
 
-       async public void Receive()
-       {
-            var buffer = new byte[1_024];
-            var received = await _tcpClient.Client.ReceiveAsync(buffer, SocketFlags.None);
-            var response = Encoding.UTF8.GetString(buffer, 0, received);
-            _onData(response);
+        public void Receive()
+        {
+            var stopping = _stop;
+
+            while (!stopping)
+            {
+                var buffer = new byte[1_024];
+                try
+                {
+                    var received = _tcpClient.Client.Receive(buffer, SocketFlags.None);
+                    if (received > 0)
+                    {
+                        var response = Encoding.UTF8.GetString(buffer, 0, received);
+                        _onData(response);
+                    }
+                }
+                catch (SocketException)
+                {
+                }
+
+                lock (dataSync)
+                {
+                    stopping = _stop;
+                }
+            }
         }
     }
 }

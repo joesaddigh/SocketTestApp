@@ -32,6 +32,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.TabConnectedTo = new System.Windows.Forms.GroupBox();
+            this.BtnSaveSend = new System.Windows.Forms.Button();
             this.BtnClear = new System.Windows.Forms.Button();
             this.BtnSend = new System.Windows.Forms.Button();
             this.LblReceive = new System.Windows.Forms.Label();
@@ -45,6 +46,7 @@
             this.TbPort = new System.Windows.Forms.TextBox();
             this.IPAddress = new System.Windows.Forms.Label();
             this.port = new System.Windows.Forms.Label();
+            this.BtnLoad = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.TabConnectedTo.SuspendLayout();
@@ -78,6 +80,8 @@
             this.TabConnectedTo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.TabConnectedTo.Controls.Add(this.BtnLoad);
+            this.TabConnectedTo.Controls.Add(this.BtnSaveSend);
             this.TabConnectedTo.Controls.Add(this.BtnClear);
             this.TabConnectedTo.Controls.Add(this.BtnSend);
             this.TabConnectedTo.Controls.Add(this.LblReceive);
@@ -90,6 +94,17 @@
             this.TabConnectedTo.TabIndex = 1;
             this.TabConnectedTo.TabStop = false;
             this.TabConnectedTo.Text = "Connected To";
+            // 
+            // BtnSaveSend
+            // 
+            this.BtnSaveSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnSaveSend.Location = new System.Drawing.Point(584, 74);
+            this.BtnSaveSend.Name = "BtnSaveSend";
+            this.BtnSaveSend.Size = new System.Drawing.Size(94, 29);
+            this.BtnSaveSend.TabIndex = 8;
+            this.BtnSaveSend.Text = "Save";
+            this.BtnSaveSend.UseVisualStyleBackColor = true;
+            this.BtnSaveSend.Click += new System.EventHandler(this.BtnSaveSend_Click);
             // 
             // BtnClear
             // 
@@ -132,7 +147,7 @@
             this.TbReceive.Name = "TbReceive";
             this.TbReceive.ReadOnly = true;
             this.TbReceive.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.TbReceive.Size = new System.Drawing.Size(663, 376);
+            this.TbReceive.Size = new System.Drawing.Size(660, 376);
             this.TbReceive.TabIndex = 3;
             this.TbReceive.Text = "";
             this.TbReceive.TextChanged += new System.EventHandler(this.TbReceive_TextChanged);
@@ -148,12 +163,12 @@
             // 
             // TbSend
             // 
-            this.TbSend.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.TbSend.AcceptsTab = true;
+            this.TbSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
             this.TbSend.Location = new System.Drawing.Point(15, 75);
             this.TbSend.Name = "TbSend";
-            this.TbSend.Size = new System.Drawing.Size(663, 376);
+            this.TbSend.Size = new System.Drawing.Size(554, 375);
             this.TbSend.TabIndex = 0;
             this.TbSend.Text = resources.GetString("TbSend.Text");
             this.TbSend.TextChanged += new System.EventHandler(this.TbSend_TextChanged);
@@ -233,6 +248,17 @@
             this.port.TabIndex = 0;
             this.port.Text = "Port:";
             // 
+            // BtnLoad
+            // 
+            this.BtnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.BtnLoad.Location = new System.Drawing.Point(584, 118);
+            this.BtnLoad.Name = "BtnLoad";
+            this.BtnLoad.Size = new System.Drawing.Size(94, 29);
+            this.BtnLoad.TabIndex = 9;
+            this.BtnLoad.Text = "Load";
+            this.BtnLoad.UseVisualStyleBackColor = true;
+            this.BtnLoad.Click += new System.EventHandler(this.BtnLoad_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -269,5 +295,7 @@
         private RichTextBox TbSend;
         private Button BtnClear;
         private Button BtnSend;
+        private Button BtnSaveSend;
+        private Button BtnLoad;
     }
 }

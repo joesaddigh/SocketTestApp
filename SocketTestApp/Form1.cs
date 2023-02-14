@@ -1,5 +1,6 @@
 using SocketTestLib;
 using System.Timers;
+using System.Windows.Forms;
 
 namespace SocketTestApp
 {
@@ -7,30 +8,24 @@ namespace SocketTestApp
     {
         bool Connected { get; set; } = false;
         private readonly SocketClient _socketClient;
-        private readonly System.Timers.Timer _timer = new System.Timers.Timer();
+        private readonly string _initialSaveOpenDirectory = GetInitialSaveOpenDirectory();
+        private const string SOCKET_DATA_SEPARATOR = "_____________________________________________";
 
+        private static string GetInitialSaveOpenDirectory()
+        {
+            return Application.ExecutablePath;
+        }
 
         public Form1()
         {
-            InitializeComponent();
             _socketClient = new SocketClient(OnSocketData);
-            InitialiseTimer();
-            SetAllUIEnabledStates();
-        }
 
-        private void ReadSocketData(object source, ElapsedEventArgs e)
-        {
-            if (Connected)
+            try
             {
-                _socketClient.Receive();
+                InitializeComponent();
+                SetAllUIEnabledStates();
             }
-        }
-
-        private void InitialiseTimer()
-        {
-            _timer.Elapsed += new ElapsedEventHandler(ReadSocketData);
-            _timer.Interval += 250;
-            _timer.Enabled = true;
+            catch { }
         }
 
         private void OnSocketData(string data)
@@ -48,24 +43,34 @@ namespace SocketTestApp
                 else
                 {
                     TbReceive.Text += data;
-                    TbReceive.Text += "_____________________________________________" + Environment.NewLine;
+                    TbReceive.Text += SOCKET_DATA_SEPARATOR + Environment.NewLine;
                 }
             }
         }
 
         private void Connect_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             Connected = _socketClient.Connect();
-            //TabConnectedTo.Enabled = Connected;
+            if (!Connected)
+            {
+                MessageBox.Show("Failed to connect", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             SetAllUIEnabledStates();
+            Cursor.Current = Cursors.Default;
         }
 
         private void BtnDisconnect_Click(object sender, EventArgs e)
         {
-            Connected = false;
-            //TabConnectedTo.Enabled = !Connected;
-            _socketClient.Disconnect();
-            SetAllUIEnabledStates();
+            try
+            {
+                Connected = false;
+                _socketClient.Disconnect();
+                SetAllUIEnabledStates();
+            }
+            catch
+            {
+            }
         }
 
         private void TbIPAddress_TextChanged(object sender, EventArgs e)
@@ -89,6 +94,30 @@ namespace SocketTestApp
         private void BtnClear_Click(object sender, EventArgs e)
         {
             TbReceive.Clear();
+        }
+
+        private void BtnSaveSend_Click(object sender, EventArgs e)
+        {
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "JSON File|*.json",
+                Title = "Save send data",
+                InitialDirectory = _initialSaveOpenDirectory
+            };
+
+            saveFileDialog.ShowDialog();
+        }
+
+        private void BtnLoad_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "JSON File|*.json",
+                Title = "Load send data",
+                InitialDirectory = _initialSaveOpenDirectory
+            };
+
+            openFileDialog.ShowDialog();
         }
 
         private void SetAllUIEnabledStates()
