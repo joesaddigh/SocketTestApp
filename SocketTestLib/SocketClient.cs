@@ -28,6 +28,7 @@ namespace SocketTestLib
                 _tcpClient.Connect(host, port);
                 _stop = false;
                 _receiveSocketDataThread = new(Receive);
+                _receiveSocketDataThread.IsBackground = true;
                 _receiveSocketDataThread.Start();
                 return true;
             }
