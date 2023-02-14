@@ -97,7 +97,6 @@
             // 
             // BtnLoad
             // 
-            this.BtnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnLoad.Location = new System.Drawing.Point(584, 118);
             this.BtnLoad.Name = "BtnLoad";
             this.BtnLoad.Size = new System.Drawing.Size(94, 29);
@@ -108,7 +107,6 @@
             // 
             // BtnSaveSend
             // 
-            this.BtnSaveSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnSaveSend.Location = new System.Drawing.Point(584, 74);
             this.BtnSaveSend.Name = "BtnSaveSend";
             this.BtnSaveSend.Size = new System.Drawing.Size(94, 29);

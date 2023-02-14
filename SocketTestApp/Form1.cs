@@ -43,7 +43,7 @@ namespace SocketTestApp
                 else
                 {
                     TbReceive.Text += data;
-                    TbReceive.Text += SOCKET_DATA_SEPARATOR + Environment.NewLine;
+                    TbReceive.Text += Environment.NewLine + SOCKET_DATA_SEPARATOR + Environment.NewLine;
                 }
             }
         }
